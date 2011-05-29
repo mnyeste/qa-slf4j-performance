@@ -2,7 +2,6 @@ package com.baxter.qa.slf4jperf;
 
 import java.util.UUID;
 
-import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.junit.Test;
 
@@ -26,6 +25,14 @@ public class Log4jTest {
 	}
 
 	@Test
+	public void testLogExtraIfStringConcat() {
+		for (int i = 1; i <= LOG_ENTRIES; ++i) {
+			if (logger.isInfoEnabled())
+				logger.info("Info message no." + i + " UUID: " + logString);
+		}
+	}
+	
+	@Test
 	public void testNoLogStringConcat() {
 		for (int i = 1; i <= LOG_ENTRIES; ++i) {
 			logger.debug("Debug message no." + i + " UUID: " + logString);
@@ -35,7 +42,7 @@ public class Log4jTest {
 	@Test
 	public void testNoLogExtraIfStringConcat() {
 		for (int i = 1; i <= LOG_ENTRIES; ++i) {
-			if (logger.getLevel() == Level.DEBUG)
+			if (logger.isDebugEnabled())
 				logger.debug("Debug message no." + i + " UUID: " + logString);
 		}
 	}
